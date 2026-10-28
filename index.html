@@ -1,11 +1,445 @@
-<div style="text-align:center; padding: 2em; font-family:sans-serif">
-<h1>Welcome to Micha's Portfolio page</h1>
-<h2>This page is a temporary page to allow people of interest to download and view my portfolio.</h2>
-<p style="padding:0 10em; margin-bottom:3em">My portfolio showcases various capabilities and experiences spanning a couple of decades. This is not your typical portfolio showing 'shiny' finished products, but more a showcase of HCD thinking, processes, strategic planning, growth and explorations and some finish products.</p>
-<p><a href="portfolio.pdf" target="_blank" style="border: none;
-    padding: 1em 2em;
-    background: #0080af;
-    color: white;
-    text-decoration: none;
-    border-radius: 3em;">Download/ View My Portfolio (PDF)</a></p>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Micha Goldfine — multidisciplinary design portfolio across product design, UX, design strategy, complex systems, websites and brand identity.">
+<title>Micha Goldfine — Design Portfolio</title>
+<style>
+:root {
+  --navy: #111b5b;
+  --navy-deep: #0b1243;
+  --ink: #f5f5fb;
+  --muted: #b8c0e4;
+  --accent: #d8ff53;
+  --line: rgba(255,255,255,.14);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--navy-deep); color: var(--ink); font-family: Inter, "Helvetica Neue", Arial, sans-serif; line-height: 1.5; }
+a { color: inherit; text-decoration: none; }
+.topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px clamp(20px, 5vw, 76px); background: rgba(11,18,67,.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.wordmark { font-weight: 750; letter-spacing: -.04em; }
+.wordmark span { display: block; color: var(--muted); font-size: .7rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.navlinks { display: flex; flex-wrap: wrap; gap: 20px; color: var(--muted); font-size: .86rem; }
+.navlinks a:hover { color: var(--accent); }
+.hero { min-height: 66vh; display: grid; align-items: end; padding: clamp(48px, 9vw, 130px) clamp(20px, 8vw, 120px) 64px; position: relative; overflow: hidden; background: radial-gradient(ellipse at 12% 30%, rgba(151,32,186,.75), transparent 38%), radial-gradient(ellipse at 75% 5%, rgba(222,73,81,.45), transparent 36%), linear-gradient(125deg, #161c70 0%, #352080 48%, #b13d77 100%); }
+.hero:after { content:""; position:absolute; inset:0; opacity:.16; background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(to bottom, black, transparent 85%); pointer-events:none; }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.kicker { color: var(--accent); text-transform: uppercase; letter-spacing: .16em; font-size: .76rem; font-weight: 700; }
+h1 { font-size: clamp(3.4rem, 9vw, 8.5rem); line-height: .92; letter-spacing: -.075em; margin: 22px 0; max-width: 950px; }
+.hero p { color: #e2e4ff; font-size: clamp(1.05rem, 2vw, 1.35rem); max-width: 620px; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+.button { display: inline-flex; align-items: center; gap: 10px; padding: 13px 18px; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; font-weight: 650; font-size: .9rem; }
+.button.primary { background: var(--accent); color: #15183b; border-color: var(--accent); }
+.intro { padding: 48px clamp(20px, 8vw, 120px); display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; border-bottom: 1px solid var(--line); }
+.intro h2 { font-size: clamp(1.8rem, 3vw, 3rem); line-height: 1.05; letter-spacing: -.05em; margin: 0; }
+.intro p { color: var(--muted); max-width: 680px; margin: 0; }
+.work { padding: 64px clamp(20px, 5vw, 76px) 90px; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.section-heading h2 { margin: 0; font-size: clamp(2.3rem, 5vw, 4rem); letter-spacing: -.06em; }
+.section-heading p { color: var(--muted); margin: 0; max-width: 390px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 34px; }
+.filter { border: 1px solid var(--line); color: var(--muted); background: transparent; padding: 9px 14px; border-radius: 999px; cursor: pointer; font: inherit; font-size: .83rem; }
+.filter.active, .filter:hover { color: #15183b; background: var(--accent); border-color: var(--accent); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 34px 22px; }
+.project-card { min-width: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: rgba(255,255,255,.035); transition: transform .2s ease, border-color .2s ease; }
+.project-card:hover { transform: translateY(-4px); border-color: rgba(216,255,83,.45); }
+.project-card[hidden] { display: none; }
+.slide-open { display: block; position: relative; width: 100%; padding: 0; border: 0; background: #10194f; cursor: zoom-in; overflow: hidden; }
+.slide-open img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: contain; }
+.zoom-label { position: absolute; right: 12px; bottom: 12px; background: rgba(8,13,46,.85); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 7px 11px; font-size: .75rem; opacity: 0; transform: translateY(4px); transition: .2s ease; }
+.slide-open:hover .zoom-label, .slide-open:focus-visible .zoom-label { opacity: 1; transform: none; }
+.card-meta { position: relative; padding: 20px 22px 24px; }
+.eyebrow { color: var(--accent); text-transform: uppercase; font-size: .68rem; font-weight: 750; letter-spacing: .13em; }
+.card-meta h3 { margin: 7px 0 8px; font-size: 1.25rem; letter-spacing: -.025em; }
+.card-meta p { margin: 0; color: var(--muted); font-size: .91rem; max-width: 580px; }
+.page-number { position: absolute; right: 22px; top: 22px; font-size: .68rem; color: #8d97c5; letter-spacing: .1em; }
+.footer { padding: 32px clamp(20px, 5vw, 76px) 42px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
+.footer strong { color: var(--ink); }
+.modal { display: none; position: fixed; inset: 0; z-index: 100; background: rgba(4,7,27,.94); align-items: center; justify-content: center; padding: 24px; }
+.modal.open { display: flex; }
+.modal img { max-width: min(96vw, 1600px); max-height: 88vh; width: auto; height: auto; object-fit: contain; box-shadow: 0 20px 80px rgba(0,0,0,.5); }
+.modal-close { position: absolute; top: 16px; right: 20px; color: white; border: 1px solid rgba(255,255,255,.45); background: rgba(255,255,255,.1); border-radius: 50%; width: 44px; height: 44px; font-size: 1.5rem; cursor: pointer; }
+.modal-caption { position: absolute; left: 24px; bottom: 16px; color: #d8dcf8; font-size: .85rem; }
+@media (max-width: 760px) {
+  .topbar { align-items: flex-start; }
+  .navlinks { gap: 12px; justify-content: flex-end; }
+  .hero { min-height: 62vh; }
+  .intro { grid-template-columns: 1fr; gap: 18px; }
+  .section-heading { align-items: flex-start; flex-direction: column; }
+  .grid { grid-template-columns: 1fr; gap: 22px; }
+  .page-number { position: static; display: block; margin-top: 15px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *:before, *:after { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <a class="wordmark" href="#top">Micha Goldfine<span>Design portfolio</span></a>
+  <nav class="navlinks" aria-label="Main navigation">
+    <a href="#about">About</a><a href="#work">Selected work</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-content">
+      <div class="kicker">Design · Strategy · Product · Experience</div>
+      <h1>Micha<br>Goldfine</h1>
+      <p>A multidisciplinary design portfolio spanning product design, complex systems, design strategy, UX, websites and brand identity.</p>
+      <div class="hero-actions">
+        <a class="button primary" href="#work">Explore selected work <span aria-hidden="true">↓</span></a>
+        <a class="button" href="#about">About the practice <span aria-hidden="true">↘</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro" id="about">
+    <h2>Connecting the big picture to the details.</h2>
+    <p>This portfolio brings together work across strategy and growth, complex digital ecosystems, product design, end-to-end UX, design systems, websites and brand identity. Each project slide preserves the visual material from the original portfolio PDF. Select any slide to view it larger.</p>
+  </section>
+
+  <section class="work" id="work">
+    <div class="section-heading">
+      <div><div class="kicker">Portfolio / Selected work</div><h2>Work in context.</h2></div>
+      <p>Explore the original project boards, case-study visuals and design explorations. Filter by discipline or open any slide for a closer look.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter portfolio work">
+      <button class="filter active" data-filter="all">All work</button> <button class="filter" data-filter="Strategy & growth">Strategy & growth</button> <button class="filter" data-filter="Complex systems">Complex systems</button> <button class="filter" data-filter="Product design">Product design</button> <button class="filter" data-filter="UX & research">UX & research</button> <button class="filter" data-filter="UI systems">UI systems</button> <button class="filter" data-filter="Websites">Websites</button> <button class="filter" data-filter="Brand">Brand</button>
+    </div>
+    <div class="grid">
+      
+      <article class="project-card" data-category="Strategy & growth">
+        <button class="slide-open" type="button" aria-label="View Mobile App RFP, page 2">
+          <img src="assets/page-02.jpg" alt="Mobile App RFP — portfolio slide 2" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Strategy & growth</span>
+          <h3>Mobile App RFP</h3>
+          <p>InsurTech / Fintech — research, workshops, wireframes, branded output and working prototype.</p>
+          <span class="page-number">PAGE 02</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Strategy & growth">
+        <button class="slide-open" type="button" aria-label="View Strategy and growth, page 3">
+          <img src="assets/page-03.jpg" alt="Strategy and growth — portfolio slide 3" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Strategy & growth</span>
+          <h3>Strategy and growth</h3>
+          <p>Design-led strategic growth and market fit for InsurTech / Fintech.</p>
+          <span class="page-number">PAGE 03</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Strategy & growth">
+        <button class="slide-open" type="button" aria-label="View Leadership & Management, page 4">
+          <img src="assets/page-04.jpg" alt="Leadership & Management — portfolio slide 4" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Strategy & growth</span>
+          <h3>Leadership & Management</h3>
+          <p>Design operations for scale, team structure, hiring, research and delivery practices.</p>
+          <span class="page-number">PAGE 04</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Complex systems">
+        <button class="slide-open" type="button" aria-label="View Hotel App Store, page 5">
+          <img src="assets/page-05.jpg" alt="Hotel App Store — portfolio slide 5" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Complex systems</span>
+          <h3>Hotel App Store</h3>
+          <p>SiteMinder — platform vision, ecosystem logic, monetisation, onboarding and support.</p>
+          <span class="page-number">PAGE 05</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Complex systems">
+        <button class="slide-open" type="button" aria-label="View Hotel App Store: ecosystem mapping, page 6">
+          <img src="assets/page-06.jpg" alt="Hotel App Store: ecosystem mapping — portfolio slide 6" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Complex systems</span>
+          <h3>Hotel App Store: ecosystem mapping</h3>
+          <p>Mapping the marketplace ecosystem, actors, discovery and business readiness.</p>
+          <span class="page-number">PAGE 06</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Complex systems">
+        <button class="slide-open" type="button" aria-label="View Hotel App Store: journey mapping, page 7">
+          <img src="assets/page-07.jpg" alt="Hotel App Store: journey mapping — portfolio slide 7" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Complex systems</span>
+          <h3>Hotel App Store: journey mapping</h3>
+          <p>Current and proposed journeys for app vendors, hoteliers and SiteMinder teams.</p>
+          <span class="page-number">PAGE 07</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Product design">
+        <button class="slide-open" type="button" aria-label="View Channel Manager, page 8">
+          <img src="assets/page-08.jpg" alt="Channel Manager — portfolio slide 8" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Product design</span>
+          <h3>Channel Manager</h3>
+          <p>SiteMinder’s core application — scalable interface foundations designed for speed and risk mitigation.</p>
+          <span class="page-number">PAGE 08</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Product design">
+        <button class="slide-open" type="button" aria-label="View Mobile Channel Manager, page 9">
+          <img src="assets/page-09.jpg" alt="Mobile Channel Manager — portfolio slide 9" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Product design</span>
+          <h3>Mobile Channel Manager</h3>
+          <p>A native app concept for smaller owner-operator hoteliers, explored through prototypes and testing.</p>
+          <span class="page-number">PAGE 09</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Product design">
+        <button class="slide-open" type="button" aria-label="View Little Hotelier, page 10">
+          <img src="assets/page-10.jpg" alt="Little Hotelier — portfolio slide 10" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Product design</span>
+          <h3>Little Hotelier</h3>
+          <p>A responsive property-management product designed from the ground up.</p>
+          <span class="page-number">PAGE 10</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Product design">
+        <button class="slide-open" type="button" aria-label="View The Booking Button, page 11">
+          <img src="assets/page-11.jpg" alt="The Booking Button — portfolio slide 11" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Product design</span>
+          <h3>The Booking Button</h3>
+          <p>A back-end information architecture and responsive white-label booking experience.</p>
+          <span class="page-number">PAGE 11</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Complex systems">
+        <button class="slide-open" type="button" aria-label="View Ecosystem and Market Fit, page 12">
+          <img src="assets/page-12.jpg" alt="Ecosystem and Market Fit — portfolio slide 12" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Complex systems</span>
+          <h3>Ecosystem and Market Fit</h3>
+          <p>Visualising SiteMinder’s core offering and the wider platform ecosystem.</p>
+          <span class="page-number">PAGE 12</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Complex systems">
+        <button class="slide-open" type="button" aria-label="View Journey Map, page 13">
+          <img src="assets/page-13.jpg" alt="Journey Map — portfolio slide 13" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Complex systems</span>
+          <h3>Journey Map</h3>
+          <p>Consolidating applications and features into a single platform experience.</p>
+          <span class="page-number">PAGE 13</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Complex systems">
+        <button class="slide-open" type="button" aria-label="View From SaaS to platform, page 14">
+          <img src="assets/page-14.jpg" alt="From SaaS to platform — portfolio slide 14" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Complex systems</span>
+          <h3>From SaaS to platform</h3>
+          <p>Proposed information architecture and feature consolidation, illustrated through prototype screens.</p>
+          <span class="page-number">PAGE 14</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="UX & research">
+        <button class="slide-open" type="button" aria-label="View Onboarding branded experience, page 15">
+          <img src="assets/page-15.jpg" alt="Onboarding branded experience — portfolio slide 15" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">UX & research</span>
+          <h3>Onboarding branded experience</h3>
+          <p>Welcome-guide concepts combining brand, tone of voice and product interaction.</p>
+          <span class="page-number">PAGE 15</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="UX & research">
+        <button class="slide-open" type="button" aria-label="View End-to-end UX audit, page 16">
+          <img src="assets/page-16.jpg" alt="End-to-end UX audit — portfolio slide 16" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">UX & research</span>
+          <h3>End-to-end UX audit</h3>
+          <p>Auditing communication, interaction flows and assets across the end-to-end experience.</p>
+          <span class="page-number">PAGE 16</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="UX & research">
+        <button class="slide-open" type="button" aria-label="View Storytelling, page 17">
+          <img src="assets/page-17.jpg" alt="Storytelling — portfolio slide 17" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">UX & research</span>
+          <h3>Storytelling</h3>
+          <p>Visual storytelling to understand customer pain points and identify product opportunities.</p>
+          <span class="page-number">PAGE 17</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="UI systems">
+        <button class="slide-open" type="button" aria-label="View Design systems and UI libraries, page 18">
+          <img src="assets/page-18.jpg" alt="Design systems and UI libraries — portfolio slide 18" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">UI systems</span>
+          <h3>Design systems and UI libraries</h3>
+          <p>A custom UI library designed to speed up handover and reduce implementation and QA risk.</p>
+          <span class="page-number">PAGE 18</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="UI systems">
+        <button class="slide-open" type="button" aria-label="View UI systems and foundations, page 19">
+          <img src="assets/page-19.jpg" alt="UI systems and foundations — portfolio slide 19" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">UI systems</span>
+          <h3>UI systems and foundations</h3>
+          <p>Platform UI foundations and a themable online insurance questionnaire flow.</p>
+          <span class="page-number">PAGE 19</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Websites">
+        <button class="slide-open" type="button" aria-label="View Website design and development, page 20">
+          <img src="assets/page-20.jpg" alt="Website design and development — portfolio slide 20" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Websites</span>
+          <h3>Website design and development</h3>
+          <p>Website design, development and content production with a less-is-more, mobile-first approach.</p>
+          <span class="page-number">PAGE 20</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Websites">
+        <button class="slide-open" type="button" aria-label="View Product catalogue, page 21">
+          <img src="assets/page-21.jpg" alt="Product catalogue — portfolio slide 21" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Websites</span>
+          <h3>Product catalogue</h3>
+          <p>A WordPress catalogue redevelopment focused on resource reduction, SEO and accessibility.</p>
+          <span class="page-number">PAGE 21</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Complex systems">
+        <button class="slide-open" type="button" aria-label="View The complete UX, page 22">
+          <img src="assets/page-22.jpg" alt="The complete UX — portfolio slide 22" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Complex systems</span>
+          <h3>The complete UX</h3>
+          <p>Developing an end-to-end experience through design culture, team, processes and tools.</p>
+          <span class="page-number">PAGE 22</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Brand">
+        <button class="slide-open" type="button" aria-label="View Brand strategy and visual identity, page 23">
+          <img src="assets/page-23.jpg" alt="Brand strategy and visual identity — portfolio slide 23" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Brand</span>
+          <h3>Brand strategy and visual identity</h3>
+          <p>Brand as a complete experience shaped by emotion, ergonomics, empathy and sensory details.</p>
+          <span class="page-number">PAGE 23</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Brand">
+        <button class="slide-open" type="button" aria-label="View ADHD Australia: identity, page 24">
+          <img src="assets/page-24.jpg" alt="ADHD Australia: identity — portfolio slide 24" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Brand</span>
+          <h3>ADHD Australia: identity</h3>
+          <p>Final brand identity and visual guidelines.</p>
+          <span class="page-number">PAGE 24</span>
+        </div>
+      </article>
+      <article class="project-card" data-category="Brand">
+        <button class="slide-open" type="button" aria-label="View ADHD Australia: applications, page 25">
+          <img src="assets/page-25.jpg" alt="ADHD Australia: applications — portfolio slide 25" loading="lazy">
+          <span class="zoom-label">View slide ↗</span>
+        </button>
+        <div class="card-meta">
+          <span class="eyebrow">Brand</span>
+          <h3>ADHD Australia: applications</h3>
+          <p>Bringing the brand system together across applications.</p>
+          <span class="page-number">PAGE 25</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="contact">
+  <div><strong>Micha Goldfine</strong><br>Design portfolio</div>
+  <div>Portfolio content is presented for viewing. Please do not share, upload or print without permission.</div>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+<div class="modal" id="slideModal" role="dialog" aria-modal="true" aria-label="Portfolio slide viewer">
+  <button class="modal-close" type="button" aria-label="Close slide viewer">×</button>
+  <img id="modalImage" src="" alt="">
+  <div class="modal-caption" id="modalCaption"></div>
 </div>
+
+<script>
+const filters = document.querySelectorAll('.filter');
+const cards = document.querySelectorAll('.project-card');
+filters.forEach(button => button.addEventListener('click', () => {
+  filters.forEach(item => item.classList.remove('active'));
+  button.classList.add('active');
+  const filter = button.dataset.filter;
+  cards.forEach(card => card.hidden = filter !== 'all' && card.dataset.category !== filter);
+}));
+
+const modal = document.getElementById('slideModal');
+const modalImage = document.getElementById('modalImage');
+const modalCaption = document.getElementById('modalCaption');
+const closeModal = () => { modal.classList.remove('open'); modalImage.src = ''; document.body.style.overflow = ''; };
+document.querySelectorAll('.slide-open').forEach(button => button.addEventListener('click', () => {
+  const img = button.querySelector('img');
+  modalImage.src = img.src;
+  modalImage.alt = img.alt;
+  modalCaption.textContent = button.closest('.project-card').querySelector('h3').textContent;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  modal.querySelector('.modal-close').focus();
+}));
+modal.querySelector('.modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+document.addEventListener('keydown', event => { if (event.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+</script>
+</body>
+</html>
